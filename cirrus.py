@@ -221,7 +221,7 @@ def main():
 	parser.add_argument('-lk', action='store', dest='loadList', default = "", help='load list of saved keys from file')
 	parser.add_argument('-sk', action='store', dest='saveList', default = "", help='save list of saved keys to file')
 	parser.add_argument('-c', action='store_true', dest='crack', help='crack loaded RSA keys')
-	parser.add_argument('-to', action='store', dest='timeout', default = "", help='timeout in seconds before terminating connections')
+	parser.add_argument('-to', action='store', dest='timeout', default = 2, help='timeout in seconds before terminating connections')
 	args = parser.parse_args()
 
 	# load keys
