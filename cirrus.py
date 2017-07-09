@@ -231,8 +231,6 @@ def main():
 	# scan IP ranges
 	if args.ipRange != []:
 		print "[+] Scanning IP range..."
-		host = ""
-		mask = ""
 		try:
 			fromIP = args.ipRange[0]
 			toIP = args.ipRange[1]
