@@ -27,7 +27,7 @@ class requestThread(threading.Thread):
 		curIP = IP2Int(start)
 		endIP = IP2Int(end)
 		while curIP <= endIP:
-			strIP = Int2IP(curIP)
+			strIP = IntegerToIP(curIP)
 			modulus = 0
 			e = 0
 			try:
@@ -109,8 +109,7 @@ def IP2Int(ip):
     	res = (16777216 * o[0]) + (65536 * o[1]) + (256 * o[2]) + o[3]
     	return res
 
-
-def Int2IP(ipnum):
+def IntegerToIP(ipnum):
 	'''
 	Concert integer to IP address.
 	Source: Bruno Adele, Stack Overflow
@@ -127,13 +126,12 @@ def scanIPRange(fromIP, toIP, threads, timeout):
 	'''
 	threadArr = []
 	for i in range(0, threads):
-		threadIPStart = Int2IP(IP2Int(fromIP) + i) 
+		threadIPStart = IntegerToIP(IP2Int(fromIP) + i) 
 		thread = requestThread(i, "ip_scanner-" + str(i), i, [threadIPStart, toIP, threads, timeout])
 		thread.start()
 		threadArr.append(thread)
 	for t in threadArr:
 		t.join()
-
 
 def scanList(hosts, threads, timeout):
 	'''
