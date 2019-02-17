@@ -1,6 +1,7 @@
 import sys
+from abc import ABCMeta, abstractmethod
 
-class ModulusList():
+class ModulusList:
 
 	'''
 	Maintains a list of (host, modulus, e) tuples.
@@ -8,6 +9,28 @@ class ModulusList():
 
 	def __init__(self):
 		self._modulusList = []
+
+	@abstractmethod
+	def add(self, host, modulus, e):
+		pass
+
+	@abstractmethod
+	def length(self):
+		pass
+
+	@abstractmethod
+	def __getitem__(self, index):
+		pass
+
+	@abstractmethod
+	def saveListToFile(self, fileName):
+		pass
+
+	@abstractmethod
+	def loadListFromFile(self, fileName):
+		pass
+
+class ModulusListImpl(ModulusList):
 
 	def add(self, host, modulus, e):
 		self._modulusList.append((host, modulus, e))

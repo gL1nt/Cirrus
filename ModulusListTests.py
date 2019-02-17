@@ -1,11 +1,11 @@
 import unittest
 import os
-from ModulusList import ModulusList
+from ModulusList import ModulusListImpl
 
 class ModulusListTests(unittest.TestCase):
 
 	def test_index_should_work(self):
-		sut = ModulusList()
+		sut = ModulusListImpl()
 		sut.add('192.168.1.1', 345635467, 3)
 		sut.add('192.168.1.2', 345635467, 3)
 		sut.add('192.168.1.3', 345635467, 3)
@@ -15,15 +15,15 @@ class ModulusListTests(unittest.TestCase):
 		self.assertTrue('192.168.1.3' in IPs)
 
 	def test_getLength_should_work(self):
-		sut = ModulusList()
+		sut = ModulusListImpl()
 		sut.add('192.168.1.1', 345635467, 3)
 		sut.add('192.168.1.2', 345635467, 3)
 		sut.add('192.168.1.3', 345635467, 3)
 		self.assertEqual(sut.length(), 3, "Shoud have three items.")
 
 	def test_save_then_load_should_retreive_all_saved_data(self):
-		sut1 = ModulusList()
-		sut2 = ModulusList()
+		sut1 = ModulusListImpl()
+		sut2 = ModulusListImpl()
 		sut1.add('192.168.1.1', 345635467, 3)
 		sut1.add('192.168.1.2', 345635467, 3)
 		sut1.add('192.168.1.3', 345635467, 3)
