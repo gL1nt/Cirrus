@@ -1,25 +1,27 @@
-from RSATool import *
+from abc import ABCMeta, abstractmethod
+from RSATools import *
+from ModulusList import *
 
 class Cracker:
 
-	__init__(self, ModulusList):
+	def __init__(self, ModulusList):
 		self._ModulusList = ModulusList
 
 	@abstractmethod
-	CrackAndReturnFactors(self):
+	def CrackAndWriteCertificates(self):
 		pass
 
 class CrackerImpl(Cracker):
 
-	CrackAndReturnFactors(self):
-		for i in range(0, self._ModulusList.getListLength()) - 1):
-		record1 = self._ModulusList.getListElement(i)
-		for j in range(i, self._ModulusList.getListLength() - 1):
-			record2 = self._ModulusList.getListElement(j+1)
-			ngcd = gcd(record1[1], record2[1])
-			if ngcd != 1 and ngcd != record1[1] and ngcd != record2[1]:
-				print "[+] Found keys for " + record1[0] + " and " + record2[0] + "."
-				forgeKeys(record1, record2, ngcd)
+	def CrackAndWriteCertificates(self):
+		for i in range(0, self._ModulusList.length() - 1):
+			record1 = self._ModulusList[i]
+			for j in range(i, self._ModulusList.length() - 1):
+				record2 = self._ModulusList[j+1]
+				ngcd = gcd(record1[1], record2[1])
+				if ngcd != 1 and ngcd != record1[1] and ngcd != record2[1]:
+					print "[+] Found keys for " + record1[0] + " and " + record2[0] + "."
+					forgeKeys(record1, record2, ngcd)
 
 def forgeKeys(record1, record2, gcd):
 	'''
