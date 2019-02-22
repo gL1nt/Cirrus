@@ -4,8 +4,14 @@ from ModulusList import *
 
 class Cracker:
 
-	def __init__(self, ModulusList):
+	__metaclass__ = ABCMeta
+
+	def __init__(self, ModulusList, StatusInformer = None):
 		self._ModulusList = ModulusList
+		if StatusInformer != None:
+			self._informer = StatusInformer
+		else:
+			self._informer = StatusInformerScreenPrinter()
 
 	@abstractmethod
 	def CrackAndWriteCertificates(self):
@@ -20,8 +26,19 @@ class CrackerImpl(Cracker):
 				record2 = self._ModulusList[j+1]
 				ngcd = gcd(record1[1], record2[1])
 				if ngcd != 1 and ngcd != record1[1] and ngcd != record2[1]:
-					print "[+] Found keys for " + record1[0] + " and " + record2[0] + "."
+					self._informer.InformUserOfSuccessfulCrack(record1[0], record2[0])
 					forgeKeys(record1, record2, ngcd)
+
+class StatusInformer:
+
+	@abstractmethod
+	def InformUserOfSuccessfulCrack(self, ip1, ip2):
+		pass
+
+class StatusInformerScreenPrinter(StatusInformer):
+
+	def InformUserOfSuccessfulCrack(self, ip1, ip2):
+		print "[+] Found keys for " + ip1 + " and " + ip2 + "."
 
 def forgeKeys(record1, record2, gcd):
 	'''

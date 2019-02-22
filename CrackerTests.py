@@ -1,14 +1,19 @@
 import unittest
 import os
-from Cracker import CrackerImpl
+from Cracker import *
 from ModulusList import ModulusListImpl
+
+class QuietInformer(StatusInformer):
+
+	def InformUserOfSuccessfulCrack(self, ip1, ip2):
+		pass
 
 class CrackerTests(unittest.TestCase):
 
 	def test_cracker_should_work_with_one_value(self):
 		theList = ModulusListImpl()
 		theList.add('127.0.0.1', 24, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertFalse(os.path.isfile('127.0.0.1.key'))
 
@@ -20,7 +25,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.4', 13, 3)
 		theList.add('192.168.1.5', 17, 3)
 		theList.add('192.168.1.6', 23, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertFalse(os.path.isfile('192.168.1.1.key'))
 		self.assertFalse(os.path.isfile('192.168.1.2.key'))
@@ -33,7 +38,7 @@ class CrackerTests(unittest.TestCase):
 		theList = ModulusListImpl()
 		theList.add('192.168.1.1', 2*3, 3)
 		theList.add('192.168.1.2', 5*3, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertTrue(os.path.isfile('192.168.1.1.key'))
 		self.assertTrue(os.path.isfile('192.168.1.2.key'))
@@ -45,7 +50,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.1', 2*3, 3)
 		theList.add('192.168.1.2', 5*3, 3)
 		theList.add('192.168.1.3', 7*3, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertTrue(os.path.isfile('192.168.1.1.key'))
 		self.assertTrue(os.path.isfile('192.168.1.2.key'))
@@ -59,7 +64,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.1', 2*3, 3)
 		theList.add('192.168.1.2', 2*5, 3)
 		theList.add('192.168.1.3', 7*11, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertTrue(os.path.isfile('192.168.1.1.key'))
 		self.assertTrue(os.path.isfile('192.168.1.2.key'))
@@ -72,7 +77,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.1', 2*3, 3)
 		theList.add('192.168.1.2', 7*5, 3)
 		theList.add('192.168.1.3', 2*11, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertTrue(os.path.isfile('192.168.1.1.key'))
 		self.assertFalse(os.path.isfile('192.168.1.2.key'))
@@ -85,7 +90,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.1', 7*3, 3)
 		theList.add('192.168.1.2', 2*5, 3)
 		theList.add('192.168.1.3', 2*11, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertFalse(os.path.isfile('192.168.1.1.key'))
 		self.assertTrue(os.path.isfile('192.168.1.2.key'))
@@ -101,7 +106,7 @@ class CrackerTests(unittest.TestCase):
 		theList.add('192.168.1.4', 2*13, 3)
 		theList.add('192.168.1.5', 7*17, 3)
 		theList.add('192.168.1.6', 23, 3)
-		sut = CrackerImpl(theList)
+		sut = CrackerImpl(theList, QuietInformer())
 		sut.CrackAndWriteCertificates()
 		self.assertTrue(os.path.isfile('192.168.1.1.key'))
 		self.assertTrue(os.path.isfile('192.168.1.2.key'))

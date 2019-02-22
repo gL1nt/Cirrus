@@ -7,6 +7,8 @@ class ModulusList:
 	Maintains a list of (host, modulus, e) tuples.
 	'''
 
+	__metaclass__ = ABCMeta
+
 	def __init__(self):
 		self._modulusList = []
 
