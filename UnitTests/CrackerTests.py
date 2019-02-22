@@ -1,5 +1,9 @@
 import unittest
 import os
+import sys
+
+sys.path.append('../')
+
 from Cracker import *
 from ModulusList import ModulusListImpl
 
