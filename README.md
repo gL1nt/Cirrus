@@ -1,7 +1,12 @@
 # Cirrus
 
 ## Introduction
-Cirrus is an easy-to-use python script that launches RSA common factor attacks on live hosts. If a pair of hosts are found to contain a common factor in their moduli, two SSL private certificates are created in the current directory in PEM format. Ideal targets for Cirrus include:
+Cirrus is an easy-to-use python script that launches RSA common factor attacks on live hosts. If a pair of hosts are found to contain a common factor in their moduli, two SSL private keys are created in the current directory in PEM format. These keys can be converted to working SSL certificates using OpenSSL:
+
+```
+openssl req -key hacked.pem -new -x509 -days 365 -out certificate.crt -subj '/CN=www.mydom.com/O=My Company Name LTD./C=US'
+```
+Ideal targets for Cirrus include:
 
 * Subnets belonging to cloud hosting providers who clone the same VM over and over again.
 * Subnets of virtual servers in general.
