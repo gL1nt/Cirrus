@@ -28,13 +28,15 @@ def Setup():
 	WriteKeyFromPrimes("4.pem", c, g)
 	WriteKeyFromPrimes("5.pem", c, h)
 	for i in range(0, 5):
-		httpd = BaseHTTPServer.HTTPServer(('localhost', 4443+i), SimpleHTTPServer.SimpleHTTPRequestHandler)
 		keyFileName=str(i+1)+".pem"
 		certFileName=keyFileName+".crt"
 		WriteCertsFromKey(keyFileName)
-		httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=keyFileName, certfile=certFileName, server_side=True)
-		print i
-		httpd.serve_forever()
+		newpid = os.fork()
+		if newpid == 0:
+			httpd = BaseHTTPServer.HTTPServer(('localhost', 4443+i), SimpleHTTPServer.SimpleHTTPRequestHandler)
+			httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=keyFileName, certfile=certFileName, server_side=True)
+			httpd.serve_forever()
+			os._exit(0)
 
 def Cleanup():
 	for i in range(0,5):
