@@ -41,6 +41,6 @@ python Cirrus.py -l targets.txt -c
 
 ## Requirements
 
-In order to run Cirrus you must have the ‘gmpy’, ‘pyasn1’, and ‘pyopenssl’ pip packages installed. Additionally, a development installation of gmp is required. In Ubuntu the package name for this is ‘libgmp3-dev’. Running the integration tests requires openssl.
+In order to run Cirrus you must have the ‘gmpy’, ‘pyasn1’, and ‘pyopenssl’ pip packages installed. Additionally, a development installation of gmp is required. In Ubuntu the package name for this is ‘libgmp3-dev’. Running the integration tests requires OpenSSL.
 
 If you are interested in launching common factor attacks against absurdly large swaths of the Internet, check out the [EFF SSL Observatory](https://www.eff.org/observatory).
