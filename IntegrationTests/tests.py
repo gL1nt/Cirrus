@@ -14,11 +14,23 @@ children = []
 class CrackerTests(unittest.TestCase):
 
 	def test_basic_read_from_host_list(self):
+		self.localTest("-c -to 2 -l ../hosts.txt")
+
+	def test_read_from_host_list_2_threads(self):
+		self.localTest("-c -to 2 -l ../hosts.txt -t 2")
+
+	def test_read_from_host_list_5_threads(self):
+		self.localTest("-c -to 2 -l ../hosts.txt -t 5")
+
+	def test_read_from_host_list_10_threads(self):
+		self.localTest("-c -to 2 -l ../hosts.txt -t 10")
+
+	def localTest(self, commandString):
 		hostList = open("../hosts.txt", "w")
 		for i in range(0, 5):		
 			hostList.write("localhost:" + str(4443+i) + "\n")
 		hostList.close()
-		os.system("python ../Cirrus.py -c -to 2 -l ../hosts.txt")
+		os.system("python ../Cirrus.py " + commandString)
 		self.assertTrue(os.path.isfile('localhost:4443.key'))
 		self.assertTrue(os.path.isfile('localhost:4444.key'))
 		self.assertFalse(os.path.isfile('localhost:4445.key'))
