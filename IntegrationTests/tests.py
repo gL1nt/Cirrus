@@ -1,5 +1,6 @@
 import unittest
 import os
+import signal
 import BaseHTTPServer, SimpleHTTPServer
 import ssl
 import sys
@@ -8,10 +9,26 @@ sys.path.append('../')
 
 from RSATools import *
 
+children = []
+
 class CrackerTests(unittest.TestCase):
 
-	def test_1(self):
-		pass
+	def test_basic_read_from_host_list(self):
+		hostList = open("../hosts.txt", "w")
+		for i in range(0, 5):		
+			hostList.write("localhost:" + str(4443+i) + "\n")
+		hostList.close()
+		os.system("python ../Cirrus.py -c -to 2 -l ../hosts.txt")
+		self.assertTrue(os.path.isfile('localhost:4443.key'))
+		self.assertTrue(os.path.isfile('localhost:4444.key'))
+		self.assertFalse(os.path.isfile('localhost:4445.key'))
+		self.assertTrue(os.path.isfile('localhost:4446.key'))
+		self.assertTrue(os.path.isfile('localhost:4447.key'))
+		os.remove('localhost:4443.key')
+		os.remove('localhost:4444.key')
+		os.remove('localhost:4446.key')
+		os.remove('localhost:4447.key')
+		os.remove('../hosts.txt')
 
 def Setup():
 	a = 282755483533707287054752184321121345766861480697448703443857012153264407439766013042402571
@@ -34,14 +51,19 @@ def Setup():
 		newpid = os.fork()
 		if newpid == 0:
 			httpd = BaseHTTPServer.HTTPServer(('localhost', 4443+i), SimpleHTTPServer.SimpleHTTPRequestHandler)
+			#httpd.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=keyFileName, certfile=certFileName, server_side=True)
 			httpd.serve_forever()
 			os._exit(0)
+		else:
+			children.append(newpid)
 
 def Cleanup():
 	for i in range(0,5):
-		os.remove(str(i) + ".pem")
-		os.remove(str(i) + ".pem.csr")
+		os.remove(str(i+1) + ".pem")
+		os.remove(str(i+1) + ".pem.crt")
+	for pid in children:
+		os.kill(pid, signal.SIGKILL)
 
 def WriteKeyFromPrimes(name, p, q):
 	builder = RSA(p, q)
@@ -55,5 +77,7 @@ def WriteCertsFromKey(keyFileName):
 
 if __name__ == '__main__':
 	Setup()
-	unittest.main()
-	Cleanup()
+	try:
+		unittest.main()
+	finally:
+		Cleanup()

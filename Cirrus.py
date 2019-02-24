@@ -4,10 +4,11 @@ import sys
 from IPTools import *
 from ModulusList import *
 from RequestThread import *
+from Cracker import *
+
+publicKeys = ModulusListImpl()
 
 def main():
-
-	publicKeys = ModulusListImpl()
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-t', action='store', dest='threads',default = 1, help='number of threads to scan with')
@@ -44,7 +45,8 @@ def main():
 	# crack RSA keys
 	if args.crack:
 		print "[+] Cracking keys..."
-		doCrack()
+		cracker = CrackerImpl(publicKeys)
+		cracker.CrackAndWriteCertificates()
 
 	# save keys
 	if args.saveList != "":
