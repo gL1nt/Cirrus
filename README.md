@@ -18,7 +18,7 @@ There is a nonzero probability that at least two targets in a large group of hos
 Targets are specified to Cirrus by either providing an IP range or by providing a list of hosts to scan. 
 
 ```
-usage: cirrus.py [-h] [-t THREADS] [-ip [IPRANGE [IPRANGE ...]]] [-l LISTNAME]
+usage: Cirrus.py [-h] [-t THREADS] [-ip [IPRANGE [IPRANGE ...]]] [-l LISTNAME]
                  [-lk LOADLIST] [-sk SAVELIST] [-c] [-to TIMEOUT]
 
 optional arguments:
@@ -33,9 +33,9 @@ optional arguments:
   -to TIMEOUT           timeout in seconds before terminating connections
 ```
 ```
-python cirrus.py -c -to 2 -ip 204.79.197.200 204.79.198.250 -to 2 -t 10
+python Cirrus.py -c -to 2 -ip 204.79.197.200 204.79.198.250 -to 2 -t 10
 ```
 ```
-python cirrus.py -l targets.txt -c
+python Cirrus.py -l targets.txt -c
 ```
 If you are interested in launching common factor attacks against absurdly large swaths of the Internet, check out the [EFF SSL Observatory](https://www.eff.org/observatory).

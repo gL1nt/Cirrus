@@ -12,6 +12,11 @@ class ModulusList:
 	def __init__(self):
 		self._modulusList = []
 
+	def addModulusList(self, other):
+		for i in range(0, other.length()):
+			item = other[i]
+			self.add(item[0], item[1], item[2])
+
 	@abstractmethod
 	def add(self, host, modulus, e):
 		pass

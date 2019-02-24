@@ -40,5 +40,24 @@ class ModulusListTests(unittest.TestCase):
 		self.assertTrue('192.168.1.2' in IPs)
 		self.assertTrue('192.168.1.3' in IPs)
 
+	def test_add_other(self):
+		list1 = ModulusListImpl()
+		list2 = ModulusListImpl()
+		list1.add('192.168.1.1', 345635467, 3)
+		list1.add('192.168.1.2', 345635467, 3)
+		list1.add('192.168.1.3', 345635467, 3)
+		list2.add('192.168.1.4', 345635467, 3)
+		list2.add('192.168.1.5', 345635467, 3)
+		list2.add('192.168.1.6', 345635467, 3)
+		list1.addModulusList(list2)
+		self.assertEqual(list1.length(), 6, "Shoud have six items.")
+		IPs = [list1[0][0], list1[1][0], list1[2][0], list1[3][0], list1[4][0], list1[5][0]]
+		self.assertTrue('192.168.1.1' in IPs)
+		self.assertTrue('192.168.1.2' in IPs)
+		self.assertTrue('192.168.1.3' in IPs)
+		self.assertTrue('192.168.1.4' in IPs)
+		self.assertTrue('192.168.1.5' in IPs)
+		self.assertTrue('192.168.1.6' in IPs)
+
 if __name__ == '__main__':
 	unittest.main()

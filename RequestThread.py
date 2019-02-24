@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import threading
 from IPTools import *
+from ModulusList import *
 
 class requestThread(threading.Thread):
 
@@ -11,7 +12,7 @@ class requestThread(threading.Thread):
 		self.threadID = threadID
 		self.name = name
 		self.counter = counter
-		self.resultList = []
+		self.resultList = ModulusListImpl()
 		self.params = params
 
 	def getResultList(self):
@@ -42,7 +43,7 @@ class requestThreadIPRange(requestThread):
 				curIP = curIP + count
 				continue
 			if modulus != 0:
-				self.resultList.append((strIP, modulus, e))	
+				self.resultList.add(strIP, modulus, e)	
 			curIP = curIP + count
 
 	def run(self):
@@ -71,7 +72,7 @@ class requestThreadHostList(requestThread):
 				curIndex = curIndex + count
 				continue
 			if modulus != 0:
-				self.resultList.append((hostList[curIndex], modulus, e))
+				self.resultList.add(hostList[curIndex], modulus, e)
 			curIndex = curIndex + count
 
 	def run(self):
