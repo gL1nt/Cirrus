@@ -33,9 +33,14 @@ optional arguments:
   -to TIMEOUT           timeout in seconds before terminating connections
 ```
 ```
-python Cirrus.py -c -to 2 -ip 204.79.197.200 204.79.198.250 -to 2 -t 10
+python Cirrus.py -c -to 2 -ip 192.168.1.1 192.168.1.250 -to 2 -t 10
 ```
 ```
 python Cirrus.py -l targets.txt -c
 ```
+
+## Requirements
+
+In order to run Cirrus you must have the ‘gmpy’, ‘pyasn1’, and ‘pyopenssl’ pip packages installed. Additionally, a development installation of gmp is required. In Ubuntu the package name for this is ‘libgmp3-dev’. Running the unit tests requires openssl.
+
 If you are interested in launching common factor attacks against absurdly large swaths of the Internet, check out the [EFF SSL Observatory](https://www.eff.org/observatory).
