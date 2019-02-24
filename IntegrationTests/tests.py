@@ -63,7 +63,6 @@ def Setup():
 		newpid = os.fork()
 		if newpid == 0:
 			httpd = BaseHTTPServer.HTTPServer(('localhost', 4443+i), SimpleHTTPServer.SimpleHTTPRequestHandler)
-			#httpd.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=keyFileName, certfile=certFileName, server_side=True)
 			httpd.serve_forever()
 			os._exit(0)
